@@ -1,12 +1,9 @@
 ﻿<Properties StartupConfiguration="{7A1D8885-3251-4907-8FAF-97EE86055930}|Default">
   <MonoDevelop.Ide.ItemProperties.try1 PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="try1/Controllers/StationsController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Состояние: try1">
     <Files>
-      <File FileName="try1/Models/Station.cs" Line="15" Column="1" />
-      <File FileName="try1/Models/ApplicationContext.cs" Line="9" Column="6" />
-      <File FileName="try1/Program.cs" Line="48" Column="59" />
-      <File FileName="try1/Startup.cs" Line="39" Column="1" />
-      <File FileName="try1/Controllers/StationsController.cs" Line="49" Column="13" />
+      <File FileName="try1/Controllers/StationsController.cs" Line="49" Column="1" />
+      <File FileName="Состояние: try1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

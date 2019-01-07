@@ -24,36 +24,5 @@ namespace try1
                 .UseStartup<Startup>();
 
 
-
-
-            /*
-        public static void Main(string[] args)
-        {
-            using (ApplicationContext db = new ApplicationContext())
-            {
-                db.Database.EnsureCreated();
-
-                Station St1 = new Station { Id = 7, Name = "E" };
-                //User user2 = new User { Name = "Alice", Age = 26 };
-
-                db.Stations.Add(St1);
-
-                db.SaveChanges();
-                Console.WriteLine("Объекты успешно сохранены");
-
-                var stations = db.Stations.ToList();
-                Console.WriteLine("Список объектов:");
-                foreach (Station u in stations)
-                {
-                    Console.WriteLine($"{u.Id}.{u.Name}");
-                }
-            }
-            Console.Read();
-
-
-
-        }
-        */
-
     }
 }

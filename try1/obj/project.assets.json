@@ -12262,11 +12262,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/vova/Projects/try1/try1/try1.csproj",
+      "projectUniqueName": "/Users/vova/Documents/GitHub/ufs/try1/try1/try1.csproj",
       "projectName": "try1",
-      "projectPath": "/Users/vova/Projects/try1/try1/try1.csproj",
+      "projectPath": "/Users/vova/Documents/GitHub/ufs/try1/try1/try1.csproj",
       "packagesPath": "/Users/vova/.nuget/packages/",
-      "outputPath": "/Users/vova/Projects/try1/try1/obj",
+      "outputPath": "/Users/vova/Documents/GitHub/ufs/try1/try1/obj",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
