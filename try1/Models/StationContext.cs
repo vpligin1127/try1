@@ -5,7 +5,7 @@ using MySql.Data.EntityFrameworkCore.Extensions;
 
 namespace try1.Models
 {
-    public class ApplicationContext : DbContext
+    public class StationContext : DbContext
     {
         public DbSet<Station> Stations { get; set; }
 
