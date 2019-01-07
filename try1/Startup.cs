@@ -32,8 +32,8 @@ namespace try1
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            ApplicationContext applicationContext = new ApplicationContext();
-            services.AddDbContext<ApplicationContext>(ServiceLifetime.Singleton);
+            StationContext stationContext = new StationContext();
+            services.AddDbContext<StationContext>(ServiceLifetime.Singleton);
 
 
 
