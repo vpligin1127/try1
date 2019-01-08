@@ -9,6 +9,7 @@ namespace try1.Models
     {
         public DbSet<Station> Stations { get; set; }
         public DbSet<Train> Trains { get; set; }
+        public DbSet<Route> Routes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         { 

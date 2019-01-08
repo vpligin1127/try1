@@ -15,5 +15,6 @@
 
   <ItemGroup>
     <Compile Remove="Controllers\EmptyClass.cs" />
+    <Compile Remove="Controllers\MethodsClass.cs" />
   </ItemGroup>
 </Project>
