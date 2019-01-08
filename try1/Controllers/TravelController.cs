@@ -32,7 +32,7 @@ namespace try1.Controllers
             int depStationId = 0;
             string arrStation = "";
             int arrStationId = 0;
-            string daySelect = MethodsStruct.DaysMatch(day);
+            string daySelected = MethodsStruct.DaysMatch(day);
 
             IEnumerable<Station> depStationQuery = _context.Stations.FromSql<Station>
                 ($"select st_id, name from travel.stations where name = {from}").ToList();
@@ -45,22 +45,21 @@ namespace try1.Controllers
             //Выводим для проверки
             Console.WriteLine($"Departing from {depStation}, depat_id = {depStationId}");
             Console.WriteLine($"Arriving at {arrStation}, arrive_id = {arrStationId}");
-            Console.WriteLine($"day = {daySelect}");
+            Console.WriteLine($"day = {daySelected}");
 
-            //Формируем список станций, входящих в желаемый маршрут.
+            //Формируем список станций, входящих в желаемый маршрут с учетом направления.
             List<int> stationIdList = new List<int>();
             List<string> stationNameList = new List<string>();
-            IEnumerable<Station> stationListQuery;
-
+            string order = "asc";
             if (depStationId < arrStationId)
-                stationListQuery = _context.Stations.FromSql<Station>($"select st_id, name from travel.stations where st_id >= {depStationId} and st_id <= {arrStationId} order by st_id asc").ToList();
+                order = "asc";
             else if (depStationId > arrStationId)
-                stationListQuery = _context.Stations.FromSql<Station>($"select st_id, name from travel.stations where st_id >= {arrStationId} and st_id <= {depStationId} order by st_id desc").ToList();
+                order = "desc";
             else
             {
                 Console.WriteLine("Дома сидим!");
-                stationListQuery = _context.Stations.FromSql<Station>($"select st_id, name from travel.stations where st_id >= {depStationId} and st_id <= {arrStationId}").ToList();
             }
+            IEnumerable<Station> stationListQuery = _context.Stations.FromSql<Station>($"select st_id, name from travel.stations where st_id >= {Math.Min(depStationId,arrStationId)} and st_id <= {Math.Max(depStationId, arrStationId)} order by st_id "+order).ToList();
 
             foreach (var i in stationListQuery)
             {
@@ -72,6 +71,34 @@ namespace try1.Controllers
                 Console.WriteLine(i);
             foreach (var i in stationNameList)
                 Console.WriteLine(i);
+
+            //Формируем список маршрутов, доступных в выбранный день.
+            IEnumerable<Train> routeDayQuery = _context.Trains.FromSql<Train>
+                ($"select * from travel.trains").ToList();
+            List<string> routeDayList = new List<string>();
+
+            MethodsStruct.RoutesOnDay(routeDayQuery, day, ref routeDayList);
+
+            Console.WriteLine("List of routes: ");
+            foreach (var i in routeDayList)
+                Console.WriteLine(i);
+
+            //Для каждого маршрута формируем список станций
+            foreach(var selectedRoute in routeDayList)
+            {
+                string routeDepStation;
+                string routeArrStation;
+                IEnumerable<Route> routeStationsQuery = _context.Routes.FromSql<Route>
+                ($"select * from travel.Routes").ToList();
+                foreach (var i in routeStationsQuery)
+                {
+                    routeDepStation = i.Dep;
+                    routeArrStation = i.Arr;
+                }
+
+
+
+            }
 
             /*
             IEnumerable<Train> tr1 = _context.Trains.ToList();

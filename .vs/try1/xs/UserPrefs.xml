@@ -2,12 +2,12 @@
   <MonoDevelop.Ide.ItemProperties.try1 PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Состояние: try1">
     <Files>
-      <File FileName="try1/Controllers/TravelController.cs" Line="54" Column="13" />
-      <File FileName="try1/Controllers/MethodsStruct.cs" Line="50" Column="14" />
+      <File FileName="try1/Controllers/TravelController.cs" Line="97" Column="18" />
+      <File FileName="try1/Controllers/MethodsStruct.cs" Line="78" Column="27" />
       <File FileName="try1/Models/TravelContext.cs" Line="14" Column="37" />
       <File FileName="try1/Models/Station.cs" Line="13" Column="25" />
       <File FileName="try1/Models/Train.cs" Line="20" Column="28" />
-      <File FileName="try1/Models/RoutesClass.cs" Line="7" Column="31" />
+      <File FileName="try1/Models/Route.cs" Line="12" Column="24" />
       <File FileName="try1/Startup.cs" Line="38" Column="13" />
       <File FileName="Состояние: try1" />
     </Files>

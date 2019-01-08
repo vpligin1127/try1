@@ -51,6 +51,44 @@ namespace try1.Controllers
 
         }
 
+        //Выбор столбца таблицы машрутов в зависимости от дня.
+        public static void RoutesOnDay(IEnumerable<try1.Models.Train> queryList, int dayInput, ref List<string> routesList)
+        {
+            switch(dayInput)
+            {
+                case 1:
+                    foreach (var i in queryList)
+                        if (i.Mon != null) routesList.Add(i.Mon);
+                    break;
+                case 2:
+                    foreach (var i in queryList)
+                        if (i.Tue != null) routesList.Add(i.Tue);
+                    break;
+                case 3:
+                    foreach (var i in queryList)
+                        if (i.Wed != null) routesList.Add(i.Wed);
+                    break;
+                case 4:
+                    foreach (var i in queryList)
+                        if (i.Thu != null) routesList.Add(i.Thu);
+                    break;
+                case 5:
+                    foreach (var i in queryList)
+                        if (i.Fri != null) routesList?.Add(i.Fri);
+                    break;
+                case 6:
+                    foreach (var i in queryList)
+                        if (i.Sat != null) routesList.Add(i.Sat);
+                    break;
+                case 7:
+                    foreach (var i in queryList)
+                        if (i.Sun != null) routesList.Add(i.Sun);
+                    break;
+
+            }
+        }
+
+
 
     }
 
