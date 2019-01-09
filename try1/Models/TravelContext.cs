@@ -11,9 +11,10 @@ namespace try1.Models
         public DbSet<Train> Trains { get; set; }
         public DbSet<Route> Routes { get; set; }
 
+        readonly string password = "rootradical";
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         { 
-           optionsBuilder.UseMySQL("server=localhost;UserId=root;Password=rootradical;database=Travel;");
+           optionsBuilder.UseMySQL("server=localhost;UserId=root;Password="+password+";database=Travel;");
 
         }
 

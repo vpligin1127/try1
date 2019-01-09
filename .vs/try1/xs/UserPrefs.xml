@@ -2,9 +2,9 @@
   <MonoDevelop.Ide.ItemProperties.try1 PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Состояние: try1">
     <Files>
-      <File FileName="try1/Controllers/TravelController.cs" Line="176" Column="17" />
+      <File FileName="try1/Controllers/TravelController.cs" Line="140" Column="13" />
       <File FileName="try1/Controllers/MethodsStruct.cs" Line="102" Column="30" />
-      <File FileName="try1/Models/TravelContext.cs" Line="14" Column="37" />
+      <File FileName="try1/Models/TravelContext.cs" Line="14" Column="50" />
       <File FileName="try1/Models/Station.cs" Line="13" Column="25" />
       <File FileName="try1/Models/Train.cs" Line="30" Column="2" />
       <File FileName="try1/Models/Route.cs" Line="12" Column="24" />
