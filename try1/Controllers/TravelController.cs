@@ -61,37 +61,48 @@ namespace try1.Controllers
                 stationNameList.Add(i.Name);
                 stationIdList.Add(i.Id);
             }
+            /*
             Console.WriteLine("List of stations: ");
             foreach (int i in stationIdList)
                 Console.WriteLine(i);
             foreach (var i in stationNameList)
                 Console.WriteLine(i);
-
+                */
             //Формируем список маршрутов, доступных в выбранный день.
             IEnumerable<Train> routeDayQuery = _context.Trains.FromSql<Train>
                 ($"select * from travel.trains").ToList();
             List<string> routeDayList = new List<string>();
 
             MethodsStruct.RoutesOnDay(routeDayQuery, day, ref routeDayList);
-
+            /*
             Console.WriteLine("List of routes: ");
             foreach (var i in routeDayList)
                 Console.WriteLine(i);
-
+                */
             //Для каждого маршрута формируем список станций с учетом направления.
+            List<string> resultingRoutes = new List<string>();
+
             foreach(var selectedRoute in routeDayList)
             {
                 string routeDepStation = "";
                 int routeDepStationId = 0;
                 string routeArrStation = "";
                 int routeArrStationId = 0;
+                //string routeDepTime;
+                //string routeArrTime;
+                //int routeTrainId;
+                //Выбираем станции и все остальное по маршруту из расписания
                 IEnumerable<Route> routeStationsQuery = _context.Routes.FromSql<Route>
                 ($"select * from travel.Routes where r_name = {selectedRoute}").ToList();
                 foreach (var i in routeStationsQuery)
                 {
                     routeDepStation = i.Dep;
                     routeArrStation = i.Arr;
+                    //routeDepTime = i.Dep_time;
+                    //routeArrTime = i.Arr_time;
+                    //routeTrainId = i.Train_id;
                 }
+                //Сравниваем со станциями желаемого маршрута
                 IEnumerable<Station> routeDepStationQuery = _context.Stations.FromSql<Station>
                     ($"select st_id, name from travel.stations where name = {routeDepStation}").ToList();
                 IEnumerable<Station> routeArrStationQuery = _context.Stations.FromSql<Station>
@@ -99,7 +110,7 @@ namespace try1.Controllers
 
                 MethodsStruct.GetVal(ref routeDepStation, ref routeDepStationId, routeDepStationQuery);
                 MethodsStruct.GetVal(ref routeArrStation, ref routeArrStationId, routeArrStationQuery);
-
+                //Проверяем вывод и создаем список станций с учетом направления из расписания
                 Console.WriteLine($"On {daySelected} route {selectedRoute} goes from {routeDepStation} with id {routeDepStationId} to {routeArrStation} with id {routeArrStationId}");
 
                 List<int> routeStationIdList = new List<int>();
@@ -114,31 +125,69 @@ namespace try1.Controllers
                     routeStationNameList.Add(i.Name);
                     routeStationIdList.Add(i.Id);
                 }
+                /*
                 Console.WriteLine("List of stations: ");
                 foreach (int i in routeStationIdList)
                     Console.WriteLine(i);
                 foreach (var i in routeStationNameList)
                     Console.WriteLine(i);
+                    */
 
-
-
+                //Преобразуем в строки и сравниваем, выбираем, что подходит.
+                string stationNameString = string.Join("", stationNameList);
+                string routeStationNameString = string.Join("", routeStationNameList);
+                if ((routeStationNameString.Length >= stationNameString.Length) && (routeStationNameString.Contains(stationNameString)))
+                {
+                    //Console.WriteLine($"{selectedRoute} is Ok");
+                    resultingRoutes.Add(selectedRoute);
+                }
+                //else Console.WriteLine($"{selectedRoute} is not Ok");
+                //Console.WriteLine(stationNameString);
+                //Console.WriteLine(routeStationNameString);
             }
 
-            /*
-            IEnumerable<Train> tr1 = _context.Trains.ToList();
-            foreach (var row in tr1)
+            //Проверка вывода
+            Console.WriteLine("Use these routes: ");
+            foreach (var i in resultingRoutes)
+                Console.Write(i + " ");
+            Console.WriteLine("");
+
+            //Выдаем поезда
+            List<int> finalTrainList = new List<int>();
+            List<string> finalDepTimeList = new List<string>();
+            List<string> finalArrTimeList = new List<string>();
+
+            foreach (var selectResultRoute in resultingRoutes)
             {
-                Console.WriteLine("Train: " + row.Number);
+                string resRouteDepTime = "";
+                string resRouteArrTime = "";
+                string resRouteArrStation = "";
+                int resRouteTrainId = 0;
+                int trainNum = 0;
+                IEnumerable<Route> resRoutesQuery = _context.Routes.FromSql<Route>
+                ($"select * from travel.Routes where r_name = {selectResultRoute}").ToList();
+                foreach (var i in resRoutesQuery)
+                {
+                    resRouteDepTime = i.Dep_time;
+                    resRouteArrTime = i.Arr_time;
+                    resRouteTrainId = i.Train_id;
+                    resRouteArrStation = i.Arr;
+                }
+                finalDepTimeList.Add(resRouteDepTime);
+                finalArrTimeList.Add(resRouteArrTime);
+                IEnumerable<Train> resTrainsQuery = _context.Trains.FromSql<Train>
+                ($"select * from travel.Trains where tr_id = {resRouteTrainId}").ToList();
+                foreach (var i in resTrainsQuery)
+                {
+                    trainNum = i.Number;
+                }
+                finalTrainList.Add(trainNum);
+                Console.WriteLine($"Train #{trainNum} goes from {from} at {resRouteDepTime} arrives at {resRouteArrStation} at {resRouteArrTime}");
+
+
             }
 
-            IEnumerable<Route> r1 = _context.Routes.ToList();
-            foreach (var row in r1)
-            {
-                Console.WriteLine("Route: " + row.RName);
-            }
-            */
 
-            //1234
             return await _context.Stations.ToListAsync();
         }
 
