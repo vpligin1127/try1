@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
+
 namespace try1.Controllers
 {
 
@@ -88,14 +89,18 @@ namespace try1.Controllers
             }
         }
 
-        public static string OrderQuery(int fromId, int toId)
+        public static string OrderQuery(int fromId, int toId, ref bool flag)
         {
             string order = "asc";
             if (fromId < toId)
                 order = "asc";
             else if (fromId > toId)
                 order = "desc";
-            else Console.WriteLine("Дома сидим!");
+            else
+            {
+                Console.WriteLine("Дома сидим!");
+                flag = false;
+            }
             return order;
         }
 
