@@ -88,6 +88,16 @@ namespace try1.Controllers
             }
         }
 
+        public static string OrderQuery(int fromId, int toId)
+        {
+            string order = "asc";
+            if (fromId < toId)
+                order = "asc";
+            else if (fromId > toId)
+                order = "desc";
+            else Console.WriteLine("Дома сидим!");
+            return order;
+        }
 
 
     }

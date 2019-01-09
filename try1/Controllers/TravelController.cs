@@ -50,16 +50,11 @@ namespace try1.Controllers
             //Формируем список станций, входящих в желаемый маршрут с учетом направления.
             List<int> stationIdList = new List<int>();
             List<string> stationNameList = new List<string>();
-            string order = "asc";
-            if (depStationId < arrStationId)
-                order = "asc";
-            else if (depStationId > arrStationId)
-                order = "desc";
-            else
-            {
-                Console.WriteLine("Дома сидим!");
-            }
-            IEnumerable<Station> stationListQuery = _context.Stations.FromSql<Station>($"select st_id, name from travel.stations where st_id >= {Math.Min(depStationId,arrStationId)} and st_id <= {Math.Max(depStationId, arrStationId)} order by st_id "+order).ToList();
+
+            string order = MethodsStruct.OrderQuery(depStationId, arrStationId);
+
+            IEnumerable<Station> stationListQuery = _context.Stations.FromSql<Station>
+                ($"select st_id, name from travel.stations where st_id >= {Math.Min(depStationId,arrStationId)} and st_id <= {Math.Max(depStationId, arrStationId)} order by st_id "+order).ToList();
 
             foreach (var i in stationListQuery)
             {
@@ -83,18 +78,47 @@ namespace try1.Controllers
             foreach (var i in routeDayList)
                 Console.WriteLine(i);
 
-            //Для каждого маршрута формируем список станций
+            //Для каждого маршрута формируем список станций с учетом направления.
             foreach(var selectedRoute in routeDayList)
             {
-                string routeDepStation;
-                string routeArrStation;
+                string routeDepStation = "";
+                int routeDepStationId = 0;
+                string routeArrStation = "";
+                int routeArrStationId = 0;
                 IEnumerable<Route> routeStationsQuery = _context.Routes.FromSql<Route>
-                ($"select * from travel.Routes").ToList();
+                ($"select * from travel.Routes where r_name = {selectedRoute}").ToList();
                 foreach (var i in routeStationsQuery)
                 {
                     routeDepStation = i.Dep;
                     routeArrStation = i.Arr;
                 }
+                IEnumerable<Station> routeDepStationQuery = _context.Stations.FromSql<Station>
+                    ($"select st_id, name from travel.stations where name = {routeDepStation}").ToList();
+                IEnumerable<Station> routeArrStationQuery = _context.Stations.FromSql<Station>
+                    ($"select st_id, name from travel.stations where name = {routeArrStation}").ToList();
+
+                MethodsStruct.GetVal(ref routeDepStation, ref routeDepStationId, routeDepStationQuery);
+                MethodsStruct.GetVal(ref routeArrStation, ref routeArrStationId, routeArrStationQuery);
+
+                Console.WriteLine($"On {daySelected} route {selectedRoute} goes from {routeDepStation} with id {routeDepStationId} to {routeArrStation} with id {routeArrStationId}");
+
+                List<int> routeStationIdList = new List<int>();
+                List<string> routeStationNameList = new List<string>();
+
+                string orderForRoute = MethodsStruct.OrderQuery(routeDepStationId, routeArrStationId);
+
+                IEnumerable<Station> routeStationListQuery = _context.Stations.FromSql<Station>
+                    ($"select st_id, name from travel.stations where st_id >= {Math.Min(routeDepStationId, routeArrStationId)} and st_id <= {Math.Max(routeDepStationId, routeArrStationId)} order by st_id " + orderForRoute).ToList();
+                foreach (var i in routeStationListQuery)
+                {
+                    routeStationNameList.Add(i.Name);
+                    routeStationIdList.Add(i.Id);
+                }
+                Console.WriteLine("List of stations: ");
+                foreach (int i in routeStationIdList)
+                    Console.WriteLine(i);
+                foreach (var i in routeStationNameList)
+                    Console.WriteLine(i);
 
 
 
